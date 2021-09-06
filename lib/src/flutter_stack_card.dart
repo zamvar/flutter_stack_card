@@ -64,8 +64,6 @@ class _StackCardState extends State<StackCard> {
       _height = widget.dimension!.height;
     }
 
-    List itemList = List.filled(widget.itemCount, Container());
-
     return SizedBox(
       width: widget.itemWidth,
       child: Stack(fit: StackFit.expand, children: <Widget>[
@@ -74,10 +72,9 @@ class _StackCardState extends State<StackCard> {
         PageView.builder(
           onPageChanged: widget.onSwap,
           physics: BouncingScrollPhysics(),
-          itemCount: itemList.length,
           controller: _pageController,
           itemBuilder: (context, index) {
-            return itemList[index % itemList.length];
+            return Container();
           },
         )
         //Loop Scroll
