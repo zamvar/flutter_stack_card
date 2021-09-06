@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class IdicatorBuilder {
+class IndicatorBuilder {
   final double displayIndicatorSize;
   final IconData? displayIndicatorIcon;
   final IconData? displayIndicatorActiveIcon;
   final Color? displayIndicatorActiveColor;
   final Color? displayIndicatorColor;
 
-  IdicatorBuilder(
+  IndicatorBuilder(
       {this.displayIndicatorSize = 24.0,
       this.displayIndicatorIcon,
       this.displayIndicatorActiveIcon,

@@ -5,21 +5,26 @@ import 'package:flutter_stack_card/src/indicator_model.dart';
 import 'package:flutter_stack_card/src/stack_dimension.dart';
 
 class StackCard extends StatefulWidget {
-  StackCard.builder(
-      {this.stackType = StackType.middle,
-      required this.itemBuilder,
-      required this.itemCount,
-      this.dimension,
-      this.stackOffset = const Offset(15, 30),
-      this.onSwap,
-      this.displayIndicator = false,
-      this.displayIndicatorBuilder});
+  StackCard.builder({
+    this.stackType = StackType.middle,
+    required this.itemBuilder,
+    required this.itemCount,
+    this.dimension,
+    this.stackOffset = const Offset(15, 30),
+    this.onSwap,
+    this.displayIndicator = false,
+    this.displayIndicatorBuilder,
+    this.showShadow = false,
+    this.shadowColor = Colors.black38,
+  });
 
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
   final ValueChanged<int>? onSwap;
   final bool displayIndicator;
-  final IdicatorBuilder? displayIndicatorBuilder;
+  final bool showShadow;
+  final Color shadowColor;
+  final IndicatorBuilder? displayIndicatorBuilder;
   final StackDimension? dimension;
   final StackType stackType;
   final Offset stackOffset;
@@ -80,7 +85,7 @@ class _StackCardState extends State<StackCard> {
       var topOffset =
           (widget.stackOffset.dy * i) - (_currentPage * widget.stackOffset.dy);
 
-      print("we got topOffset $topOffset and sizeOffsety is $sizeOffsety");
+      // print("we got topOffset $topOffset and sizeOffsety is $sizeOffsety");
       _cards.add(Positioned.fill(
         child: cardBuilder(
             i,
@@ -88,8 +93,8 @@ class _StackCardState extends State<StackCard> {
                 ? _width - sizeOffsetx
                 : _width,
             _height - sizeOffsety),
-        top: topOffset/2,
-        bottom: topOffset/2,
+        top: topOffset / 2,
+        bottom: topOffset / 2,
         left: widget.stackType == StackType.middle
             ? (_currentPage > (i) ? -(_currentPage - i) * (_width * 4) : 0)
             : (_currentPage > (i)
@@ -102,15 +107,24 @@ class _StackCardState extends State<StackCard> {
   }
 
   Widget cardBuilder(int index, double width, double height) {
-    print("we got $index with $width * $height");
     return Align(
-        alignment: Alignment.center,
-        child: Container(
-            width: width * .8,
-            height: height * .8,
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(color: Colors.black38, spreadRadius: 1, blurRadius: 2)
-            ], borderRadius: BorderRadius.all(Radius.circular(12))),
-            child: widget.itemBuilder(context, index)));
+      alignment: Alignment.center,
+      child: Container(
+        width: width * .8,
+        height: height * .8,
+        decoration: BoxDecoration(
+          boxShadow: !widget.showShadow
+              ? [
+                  BoxShadow(
+                      color: widget.shadowColor, spreadRadius: 1, blurRadius: 2)
+                ]
+              : [],
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+        ),
+        child: widget.itemBuilder(context, index),
+      ),
+    );
   }
 }
