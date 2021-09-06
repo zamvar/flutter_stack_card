@@ -70,6 +70,7 @@ class _StackCardState extends State<StackCard> {
         _cardStack(),
         widget.displayIndicator ? _cardIndicator() : Container(),
         PageView.builder(
+          itemCount: widget.itemCount,
           onPageChanged: widget.onSwap,
           physics: BouncingScrollPhysics(),
           controller: _pageController,
