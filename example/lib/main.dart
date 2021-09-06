@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
           displayIndicator: false,
           stackType: StackType.right,
           displayIndicatorBuilder:
-              IdicatorBuilder(displayIndicatorActiveColor: Colors.blue),
+              IndicatorBuilder(displayIndicatorActiveColor: Colors.blue),
           itemCount: _movieData.length,
           onSwap: (index) {
             print("Page change to $index");

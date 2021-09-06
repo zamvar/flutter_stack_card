@@ -14,16 +14,20 @@ class StackCard extends StatefulWidget {
     this.onSwap,
     this.displayIndicator = false,
     this.displayIndicatorBuilder,
-    this.showShadow = false,
-    this.shadowColor = Colors.black38,
+    this.shadow = const [
+      BoxShadow(
+        color: Colors.black38,
+        spreadRadius: 0.7,
+        blurRadius: 1,
+      )
+    ],
   });
 
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
   final ValueChanged<int>? onSwap;
   final bool displayIndicator;
-  final bool showShadow;
-  final Color shadowColor;
+  final List<BoxShadow> shadow;
   final IndicatorBuilder? displayIndicatorBuilder;
   final StackDimension? dimension;
   final StackType stackType;
@@ -113,14 +117,7 @@ class _StackCardState extends State<StackCard> {
         width: width * .8,
         height: height * .8,
         decoration: BoxDecoration(
-          boxShadow: widget.showShadow
-              ? [
-                  BoxShadow(
-                      color: widget.shadowColor,
-                      spreadRadius: 0.7,
-                      blurRadius: 1)
-                ]
-              : [],
+          boxShadow: widget.shadow,
           borderRadius: BorderRadius.all(
             Radius.circular(12),
           ),
