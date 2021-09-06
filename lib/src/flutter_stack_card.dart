@@ -64,26 +64,22 @@ class _StackCardState extends State<StackCard> {
       _height = widget.dimension!.height;
     }
 
+    List itemList = List.filled(widget.itemCount, Container());
+
     return SizedBox(
       width: widget.itemWidth,
       child: Stack(fit: StackFit.expand, children: <Widget>[
         _cardStack(),
         widget.displayIndicator ? _cardIndicator() : Container(),
-        // PageView.builder(
-        //   onPageChanged: widget.onSwap,
-        //   physics: BouncingScrollPhysics(),
-        //   controller: _pageController,
-        //   // itemCount: widget.itemCount,
-
-        //   itemBuilder: List.filled(widget.itemCount, Container()).toList(),
-        // )
-        //Loop Scroll
-        PageView(
+        PageView.builder(
           onPageChanged: widget.onSwap,
           physics: BouncingScrollPhysics(),
           controller: _pageController,
-          children: List.filled(widget.itemCount, Container()),
+          itemBuilder: (context, index) {
+            return itemList[index % itemList.length];
+          },
         )
+        //Loop Scroll
       ]),
     );
   }
