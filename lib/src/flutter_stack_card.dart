@@ -113,10 +113,12 @@ class _StackCardState extends State<StackCard> {
         width: width * .8,
         height: height * .8,
         decoration: BoxDecoration(
-          boxShadow: !widget.showShadow
+          boxShadow: widget.showShadow
               ? [
                   BoxShadow(
-                      color: widget.shadowColor, spreadRadius: 1, blurRadius: 2)
+                      color: widget.shadowColor,
+                      spreadRadius: 0.7,
+                      blurRadius: 1)
                 ]
               : [],
           borderRadius: BorderRadius.all(
