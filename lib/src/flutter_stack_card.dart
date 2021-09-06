@@ -107,12 +107,12 @@ class _StackCardState extends State<StackCard> {
                 ? _width - sizeOffsetx
                 : _width,
             _height - sizeOffsety),
-        top: topOffset / 2,
-        bottom: topOffset / 2,
+        top: topOffset / 4,
+        bottom: topOffset / 4,
         left: widget.stackType == StackType.middle
             ? (_currentPage > (i) ? -(_currentPage - i) * (_width * 4) : 0)
             : (_currentPage > (i)
-                ? -(_currentPage - i) * (_width * 4)
+                ? -(_currentPage - i) * (_width * 8)
                 : leftOffset),
       ));
     }
