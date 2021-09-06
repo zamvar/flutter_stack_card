@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_slider_indicator/flutter_slider_indicator.dart';
 import 'package:flutter_stack_card/flutter_stack_card.dart';
 import 'package:flutter_stack_card/src/indicator_model.dart';
 import 'package:flutter_stack_card/src/stack_dimension.dart';
@@ -8,20 +7,20 @@ import 'package:flutter_stack_card/src/stack_dimension.dart';
 class StackCard extends StatefulWidget {
   StackCard.builder(
       {this.stackType = StackType.middle,
-      @required this.itemBuilder,
-      @required this.itemCount,
+      required this.itemBuilder,
+      required this.itemCount,
       this.dimension,
-      this.stackOffset = const Offset(15, 15),
+      this.stackOffset = const Offset(15, 30),
       this.onSwap,
       this.displayIndicator = false,
       this.displayIndicatorBuilder});
 
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
-  final ValueChanged<int> onSwap;
+  final ValueChanged<int>? onSwap;
   final bool displayIndicator;
-  final IdicatorBuilder displayIndicatorBuilder;
-  final StackDimension dimension;
+  final IdicatorBuilder? displayIndicatorBuilder;
+  final StackDimension? dimension;
   final StackType stackType;
   final Offset stackOffset;
 
@@ -38,7 +37,7 @@ class _StackCardState extends State<StackCard> {
   Widget build(BuildContext context) {
     _pageController.addListener(() {
       setState(() {
-        _currentPage = _pageController.page;
+        _currentPage = _pageController.page ?? 0;
       });
     });
 
@@ -46,15 +45,15 @@ class _StackCardState extends State<StackCard> {
       _height = MediaQuery.of(context).size.height;
       _width = MediaQuery.of(context).size.width;
     } else {
-      assert(widget.dimension.width > 0);
-      assert(widget.dimension.height > 0);
-      _width = widget.dimension.width;
-      _height = widget.dimension.height;
+      assert(widget.dimension!.width > 0);
+      assert(widget.dimension!.height > 0);
+      _width = widget.dimension!.width;
+      _height = widget.dimension!.height;
     }
 
     return Stack(fit: StackFit.expand, children: <Widget>[
       _cardStack(),
-      widget.displayIndicator ? _cardIndicator() : Container(),
+      Container(),
       PageView.builder(
         onPageChanged: widget.onSwap,
         physics: BouncingScrollPhysics(),
@@ -81,14 +80,16 @@ class _StackCardState extends State<StackCard> {
       var topOffset =
           (widget.stackOffset.dy * i) - (_currentPage * widget.stackOffset.dy);
 
+      print("we got topOffset $topOffset and sizeOffsety is $sizeOffsety");
       _cards.add(Positioned.fill(
-        child: _cardbuilder(
+        child: cardBuilder(
             i,
             widget.stackType == StackType.middle
                 ? _width - sizeOffsetx
                 : _width,
             _height - sizeOffsety),
-        top: topOffset,
+        top: topOffset/2,
+        bottom: topOffset/2,
         left: widget.stackType == StackType.middle
             ? (_currentPage > (i) ? -(_currentPage - i) * (_width * 4) : 0)
             : (_currentPage > (i)
@@ -100,9 +101,10 @@ class _StackCardState extends State<StackCard> {
     return Stack(fit: StackFit.expand, children: _cards);
   }
 
-  Widget _cardbuilder(int index, double width, double height) {
+  Widget cardBuilder(int index, double width, double height) {
+    print("we got $index with $width * $height");
     return Align(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center,
         child: Container(
             width: width * .8,
             height: height * .8,
@@ -110,26 +112,5 @@ class _StackCardState extends State<StackCard> {
               BoxShadow(color: Colors.black38, spreadRadius: 1, blurRadius: 2)
             ], borderRadius: BorderRadius.all(Radius.circular(12))),
             child: widget.itemBuilder(context, index)));
-  }
-
-  Widget _cardIndicator() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-          padding: const EdgeInsets.only(bottom: 24),
-          child: SliderIndicator(
-              length: widget.itemCount,
-              activeIndex: _currentPage.round(),
-              displayIndicatorIcon:
-                  widget.displayIndicatorBuilder.displayIndicatorIcon,
-              displayIndicatorActiveIcon:
-                  widget.displayIndicatorBuilder.displayIndicatorActiveIcon,
-              displayIndicatorColor:
-                  widget.displayIndicatorBuilder.displayIndicatorColor,
-              displayIndicatorActiveColor:
-                  widget.displayIndicatorBuilder.displayIndicatorActiveColor,
-              displayIndicatorSize:
-                  widget.displayIndicatorBuilder.displayIndicatorSize)),
-    );
   }
 }

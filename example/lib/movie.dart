@@ -1,11 +1,11 @@
 class Movie {
-  final int id;
-  final String title;
-  final String image;
-  final String display;
-  final double imdb;
-  final String gendres;
-  final String desc;
+  final int? id;
+  final String? title;
+  final String? image;
+  final String? display;
+  final double? imdb;
+  final String? gendres;
+  final String? desc;
 
   Movie(
       {this.id,

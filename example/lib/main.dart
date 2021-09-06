@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -36,12 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title ?? " "),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: StackCard.builder(
-          displayIndicator: true,
+          displayIndicator: false,
+          stackType: StackType.right,
           displayIndicatorBuilder:
               IdicatorBuilder(displayIndicatorActiveColor: Colors.blue),
           itemCount: _movieData.length,
@@ -73,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     image: DecorationImage(
-                        image: ExactAssetImage(movie.image),
+                        image: ExactAssetImage(movie.image ?? ""),
                         fit: BoxFit.cover)),
               ),
               Container(
@@ -92,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Container(
                             width: 150,
                             child: Text(
-                              movie.title,
+                              movie.title ?? "",
                               style: TextStyle(
                                   color: Colors.blueGrey, fontSize: 24),
                               textAlign: TextAlign.left,
@@ -103,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: <Widget>[
                               SizedBox(height: 4),
                               Text(
-                                movie.display,
+                                movie.display ?? "",
                                 style:
                                     TextStyle(fontSize: 14, color: Colors.grey),
                                 textAlign: TextAlign.right,
@@ -121,13 +122,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: Text(movie.gendres,
+                        child: Text(movie.gendres ?? "",
                             style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 16, top: 8),
-                          child: Text(movie.desc,
+                          child: Text(movie.desc ?? "",
                               style: TextStyle(color: Colors.grey)),
                         ),
                       ),
