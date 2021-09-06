@@ -74,6 +74,7 @@ class _StackCardState extends State<StackCard> {
         PageView.builder(
           onPageChanged: widget.onSwap,
           physics: BouncingScrollPhysics(),
+          itemCount: itemList.length,
           controller: _pageController,
           itemBuilder: (context, index) {
             return itemList[index % itemList.length];
