@@ -63,14 +63,17 @@ class _StackCardState extends State<StackCard> {
     return Stack(fit: StackFit.expand, children: <Widget>[
       _cardStack(),
       Container(),
-      PageView.builder(
-        onPageChanged: widget.onSwap,
-        physics: BouncingScrollPhysics(),
-        controller: _pageController,
-        itemCount: widget.itemCount,
-        itemBuilder: (context, index) {
-          return Container();
-        },
+      Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: PageView.builder(
+          onPageChanged: widget.onSwap,
+          physics: BouncingScrollPhysics(),
+          controller: _pageController,
+          itemCount: widget.itemCount,
+          itemBuilder: (context, index) {
+            return Container();
+          },
+        ),
       )
     ]);
   }
