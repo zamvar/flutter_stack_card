@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: StackCard.builder(
+          itemWidth: MediaQuery.of(context).size.width,
           displayIndicator: false,
           stackType: StackType.right,
           indicatorWidget: Container(),

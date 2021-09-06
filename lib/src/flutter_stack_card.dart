@@ -13,6 +13,7 @@ class StackCard extends StatefulWidget {
     this.stackOffset = const Offset(15, 30),
     this.onSwap,
     this.displayIndicator = false,
+    required this.itemWidth,
     // this.displayIndicatorBuilder,
     required this.indicatorWidget,
     this.shadow = const [
@@ -29,7 +30,8 @@ class StackCard extends StatefulWidget {
   final ValueChanged<int>? onSwap;
   final bool displayIndicator;
   final List<BoxShadow> shadow;
-  final indicatorWidget;
+  final Widget indicatorWidget;
+  final double itemWidth;
   // final IndicatorBuilder? displayIndicatorBuilder;
   final StackDimension? dimension;
   final StackType stackType;
@@ -62,22 +64,25 @@ class _StackCardState extends State<StackCard> {
       _height = widget.dimension!.height;
     }
 
-    return Stack(fit: StackFit.expand, children: <Widget>[
-      _cardStack(),
-      widget.displayIndicator ? _cardIndicator() : Container(),
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: PageView.builder(
-          onPageChanged: widget.onSwap,
-          physics: BouncingScrollPhysics(),
-          controller: _pageController,
-          itemCount: widget.itemCount,
-          itemBuilder: (context, index) {
-            return Container();
-          },
-        ),
-      )
-    ]);
+    return SizedBox(
+      width: widget.itemWidth,
+      child: Stack(fit: StackFit.expand, children: <Widget>[
+        _cardStack(),
+        widget.displayIndicator ? _cardIndicator() : Container(),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: PageView.builder(
+            onPageChanged: widget.onSwap,
+            physics: BouncingScrollPhysics(),
+            controller: _pageController,
+            itemCount: widget.itemCount,
+            itemBuilder: (context, index) {
+              return Container();
+            },
+          ),
+        )
+      ]),
+    );
   }
 
   Widget _cardStack() {
@@ -136,8 +141,9 @@ class _StackCardState extends State<StackCard> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
-          padding: const EdgeInsets.only(bottom: 24),
-          child: widget.indicatorWidget),
+        padding: const EdgeInsets.only(bottom: 24),
+        child: widget.indicatorWidget,
+      ),
     );
   }
 }
