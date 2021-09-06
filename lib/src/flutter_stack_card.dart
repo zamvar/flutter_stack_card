@@ -119,7 +119,7 @@ class _StackCardState extends State<StackCard> {
         decoration: BoxDecoration(
           boxShadow: widget.shadow,
           borderRadius: BorderRadius.all(
-            Radius.circular(12),
+            Radius.circular(60),
           ),
         ),
         child: widget.itemBuilder(context, index),
