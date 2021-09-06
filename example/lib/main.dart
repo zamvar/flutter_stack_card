@@ -43,8 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: StackCard.builder(
           displayIndicator: false,
           stackType: StackType.right,
-          displayIndicatorBuilder:
-              IndicatorBuilder(displayIndicatorActiveColor: Colors.blue),
+          indicatorWidget: Container(),
+          // displayIndicatorBuilder:
+          //     IndicatorBuilder(displayIndicatorActiveColor: Colors.blue),
           itemCount: _movieData.length,
           onSwap: (index) {
             print("Page change to $index");

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_stack_card/flutter_stack_card.dart';
-import 'package:flutter_stack_card/src/indicator_model.dart';
+// import 'package:flutter_stack_card/src/indicator_model.dart';
 import 'package:flutter_stack_card/src/stack_dimension.dart';
 
 class StackCard extends StatefulWidget {
@@ -13,7 +13,8 @@ class StackCard extends StatefulWidget {
     this.stackOffset = const Offset(15, 30),
     this.onSwap,
     this.displayIndicator = false,
-    this.displayIndicatorBuilder,
+    // this.displayIndicatorBuilder,
+    required this.indicatorWidget,
     this.shadow = const [
       BoxShadow(
         color: Colors.black38,
@@ -28,7 +29,8 @@ class StackCard extends StatefulWidget {
   final ValueChanged<int>? onSwap;
   final bool displayIndicator;
   final List<BoxShadow> shadow;
-  final IndicatorBuilder? displayIndicatorBuilder;
+  final indicatorWidget;
+  // final IndicatorBuilder? displayIndicatorBuilder;
   final StackDimension? dimension;
   final StackType stackType;
   final Offset stackOffset;
@@ -62,7 +64,7 @@ class _StackCardState extends State<StackCard> {
 
     return Stack(fit: StackFit.expand, children: <Widget>[
       _cardStack(),
-      Container(),
+      widget.displayIndicator ? _cardIndicator() : Container(),
       Padding(
         padding: const EdgeInsets.all(16.0),
         child: PageView.builder(
@@ -127,6 +129,15 @@ class _StackCardState extends State<StackCard> {
         ),
         child: widget.itemBuilder(context, index),
       ),
+    );
+  }
+
+  Widget _cardIndicator() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: widget.indicatorWidget),
     );
   }
 }
