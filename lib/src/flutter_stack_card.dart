@@ -69,13 +69,16 @@ class _StackCardState extends State<StackCard> {
       child: Stack(fit: StackFit.expand, children: <Widget>[
         _cardStack(),
         widget.displayIndicator ? _cardIndicator() : Container(),
-        PageView.builder(
-          onPageChanged: widget.onSwap,
-          physics: BouncingScrollPhysics(),
-          controller: _pageController,
-          itemBuilder: (context, index) {
-            return Container();
-          },
+        Visibility(
+          visible: false,
+          child: PageView.builder(
+            onPageChanged: widget.onSwap,
+            physics: BouncingScrollPhysics(),
+            controller: _pageController,
+            itemBuilder: (context, index) {
+              return Container();
+            },
+          ),
         )
         //Loop Scroll
       ]),
