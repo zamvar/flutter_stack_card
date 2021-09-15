@@ -9,6 +9,7 @@ class StackCard extends StatefulWidget {
     this.stackType = StackType.middle,
     required this.itemBuilder,
     required this.itemCount,
+    this.pageSnapping = false,
     this.dimension,
     this.stackOffset = const Offset(15, 30),
     this.onSwap,
@@ -24,7 +25,7 @@ class StackCard extends StatefulWidget {
       )
     ],
   });
-
+  final bool pageSnapping;
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
   final ValueChanged<int>? onSwap;
@@ -70,6 +71,7 @@ class _StackCardState extends State<StackCard> {
         _cardStack(),
         widget.displayIndicator ? _cardIndicator() : Container(),
         PageView.builder(
+          pageSnapping: widget.pageSnapping,
           itemCount: widget.itemCount,
           onPageChanged: widget.onSwap,
           physics: BouncingScrollPhysics(),
